@@ -1,0 +1,23 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: estudantes
+    volumes:
+      - ./testebanco:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: teste@teste.com
+      PGADMIN_DEFAULT_PASSWORD: teste
+    ports:
+      - 5050:80
+      
