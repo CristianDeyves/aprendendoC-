@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace CrudApi.Estudantes
 {
     public class Estudante
@@ -16,6 +11,16 @@ namespace CrudApi.Estudantes
             Id = Guid.NewGuid();
             Nome = nome;
             Ativo = true;
+        }
+
+        public void AtualizarNome(string nome)
+        {
+            Nome = nome;
+        }
+
+        public void Desativar()
+        {
+            Ativo = false;
         }
     }
 }
