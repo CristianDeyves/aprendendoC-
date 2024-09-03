@@ -20,11 +20,11 @@ namespace CrudApi.Estudantes
                     return Results.Conflict("Estudante já existe");
                 }
 
-                var novoEstudante = new Estudante(request.Nome);
+                var novoEstudante = new Estudante(request.Nome, request.Email);
                 await context.Estudantes.AddAsync(novoEstudante, ct);
                 await context.SaveChangesAsync(ct);
 
-                var estudanteRetorno = new EstudanteDTO(novoEstudante.Id, novoEstudante.Nome);
+                var estudanteRetorno = new EstudanteDTO(novoEstudante.Id, novoEstudante.Nome, novoEstudante.Email, novoEstudante.Nascimento);
 
                 return Results.Created(estudanteRetorno.Id.ToString(), estudanteRetorno);
             });
@@ -35,7 +35,7 @@ namespace CrudApi.Estudantes
                 var estudantes = await context
                 .Estudantes
                 .Where(estudante => estudante.Ativo)
-                .Select(estudante => new EstudanteDTO(estudante.Id, estudante.Nome))
+                .Select(estudante => new EstudanteDTO(estudante.Id, estudante.Nome, estudante.Email, estudante.Nascimento))
                 .ToListAsync(ct);
                 return Results.Ok(estudantes);
             });
@@ -53,7 +53,7 @@ namespace CrudApi.Estudantes
                 estudante.AtualizarNome(request.Nome);
                 await context.SaveChangesAsync(ct);
 
-                return Results.Ok(new EstudanteDTO(estudante.Id, estudante.Nome));
+                return Results.Ok(new EstudanteDTO(estudante.Id, estudante.Nome, estudante.Email, estudante.Nascimento));
             });
 
             rotasEstudantes.MapDelete("{id}",
